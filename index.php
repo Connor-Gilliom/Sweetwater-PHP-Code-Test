@@ -47,10 +47,6 @@
             {
                 array_push($signature_comments, $row["comments"]);
             }
-            else if(str_contains($search_comment, "referred"))
-            {
-                array_push($referred_comments, $row["comments"]);
-            }
             else
             {
                 array_push($misc_comments, $row["comments"]);
@@ -69,6 +65,55 @@
     <title>Document</title>
 </head>
 <body>
+<hr>
+    <h3>Candy Comments</h3>
+    <ul>
+        <?php foreach($candy_comments as $comment): ?>
+            <li>
+                <?php echo $comment; ?>
+            </li>
+        <?php endforeach; ?>
+    </ul>
 
+    <hr>
+    <h3>Call Comments</h3>
+    <ul>
+        <?php foreach($call_comments as $comment): ?>
+            <li>
+                <?php echo $comment; ?>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+
+    <hr>
+    <h3>Referred Comments</h3>
+    <ul>
+        <?php foreach($referred_comments as $comment): ?>
+            <li>
+                <?php echo $comment; ?>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+
+    <hr>
+    <h3>Signature Comments</h3>
+    <ul>
+        <?php foreach($signature_comments as $comment): ?>
+            <li>
+                <?php echo $comment; ?>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+
+    <hr>
+    <h3>Miscellaneous Comments</h3>
+    <ul>
+        <?php foreach($misc_comments as $comment): ?>
+            <li>
+                <?php echo $comment; ?>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+    <hr>
 </body>
 </html>

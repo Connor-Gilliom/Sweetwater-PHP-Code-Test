@@ -64,6 +64,17 @@
                 //get the 8 chars of the date
                 $date = substr($search_comment, $date_index, 8);
                 
+                //create a date time from the string so we can convert to the format we want
+                $date_time = new DateTime($date);
+                
+                //get the date format Y-m-d as a string
+                $date = $date_time->format("Y-m-d");
+                
+                //build a query to update the order with the date found in the comment 
+                $sql = $conn->prepare("UPDATE sweetwater_test SET shipdate_expected=? WHERE orderid=?");
+                $sql->bind_param("si", $date, $row["orderid"]);
+                $sql->execute();
+                $sql->close();
             }
         }
     }

@@ -51,6 +51,20 @@
             {
                 array_push($misc_comments, $row["comments"]);
             }
+
+            $date_search_flag = "expected ship date: ";
+
+            //add the date to the db if a comment contains one
+            if(str_contains($search_comment, $date_search_flag))
+            {
+
+                //get the index of the date by finding the position of the search flag and then adding the length of the flag
+                $date_index = strpos($search_comment, $date_search_flag) + strlen($date_search_flag);
+
+                //get the 8 chars of the date
+                $date = substr($search_comment, $date_index, 8);
+                
+            }
         }
     }
 

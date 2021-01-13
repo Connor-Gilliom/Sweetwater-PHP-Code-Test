@@ -31,19 +31,19 @@
             //check if the search comment contains one of our search strings if it does
             //push it to the corresponding array, if none of the searchs find a match 
             //put the comment in the miscellaneous array
-            if(str_contains($search_comment, "candy"))
+            if(candy_filters($search_comment))
             {
                 array_push($candy_comments, $row["comments"]);
             }
-            else if(str_contains($search_comment, "call"))
+            else if(call_filters($search_comment))
             {
                 array_push($call_comments, $row["comments"]);
             }
-            else if(str_contains($search_comment, "referred"))
+            else if(referred_filters($search_comment))
             {
                 array_push($referred_comments, $row["comments"]);
             }
-            else if(str_contains($search_comment, "signature"))
+            else if(signature_filters($search_comment))
             {
                 array_push($signature_comments, $row["comments"]);
             }
@@ -79,6 +79,124 @@
         }
     }
 
+    //applys the filters to find a call comment and returns true/false based on if this is a call comment
+    function call_filters($comment)
+    {
+        //first level check
+        if(str_contains($comment, "call") || str_contains($comment, "calls"))
+        {
+            
+            if(
+                //look for ways the word call is used with words around it
+                str_contains($comment, "call me") ||
+                str_contains($comment, "please call") ||
+                str_contains($comment, "plz call") ||
+
+                str_contains($comment, "phone call") ||
+                str_contains($comment, "phone calls") ||
+
+                str_contains($comment, "do not call") ||
+                str_contains($comment, "don't call") ||
+                str_contains($comment, "no calls") ||
+                
+                str_contains($comment, "call if") ||
+                str_contains($comment, "try to call") ||
+
+                //words that are used together but not next together
+                (str_contains($comment, "answer") && str_contains($comment, "calls")) ||
+                (str_contains($comment, "answer") && str_contains($comment, "call")) ||
+                (str_contains($comment, "question") && str_contains($comment, "call")) ||
+                (str_contains($comment, "question") && str_contains($comment, "calls"))
+            ){
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
+    function candy_filters($comment)
+    {
+        //check for the base word of candy as well as candy types
+        if(str_contains($comment, "candy"))
+        {
+            return true;
+        }
+        else if(str_contains($comment, "smarties"))
+        {
+            return true;
+        }
+        else if(str_contains($comment, "bit o honey"))
+        {
+            return true;
+        }
+        else if(str_contains($comment, "mints"))
+        {
+            return true;
+        }
+        else if(str_contains($comment, "mint"))
+        {
+            return true;
+        }
+        else if(str_contains($comment, "cinnamon"))
+        {
+            return true;
+        }
+        else if(str_contains($comment, "tootsie rolls"))
+        {
+            return true;
+        }
+        else if(str_contains($comment, "taffy"))
+        {
+            return true;
+        }
+ 
+        return false;
+        
+    }
+
+    function signature_filters($comment)
+    {
+        //check if the comment contains words denoting signing or signatures
+        if(str_contains($comment, "signature") || str_contains($comment, "sign"))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    function referred_filters($comment)
+    {
+        //check for different wordings of referrals
+        if(str_contains($comment, "referred"))
+        {
+            return true;
+        }
+        else if(str_contains($comment, "referral"))
+        {
+            return true;
+        }
+        else if(str_contains($comment, "told me about"))
+        {
+            return true;
+        }
+        else if(str_contains($comment, "heard"))
+        {
+            return true;
+        }
+        
+        return false;
+
+    }
 
 ?>
 

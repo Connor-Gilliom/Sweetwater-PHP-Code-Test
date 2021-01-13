@@ -77,6 +77,12 @@
                 $sql->close();
             }
         }
+
+        //send all the comment data to be outputed
+        output_comments($candy_comments, $call_comments, $referred_comments, $signature_comments, $misc_comments);
+
+        $conn->close();
+
     }
 
     //applys the filters to find a call comment and returns true/false based on if this is a call comment
@@ -198,65 +204,26 @@
 
     }
 
+    //takes all the comment sets and outputs them as html
+    function output_comments($candy_comments, $call_comments, $referred_comments, $signature_comments, $misc_comments)
+    {
+        comment_formater($candy_comments, "Candy Comments");
+        comment_formater($call_comments, "Call Comments");
+        comment_formater($referred_comments, "Referred Comments");
+        comment_formater($signature_comments, "Signature Comments");
+        comment_formater($misc_comments, "Miscellaneous Comments");
+        echo "<hr>";
+    }
+
+    //takes a set of comments and formats them into an html list using a provided name as the section title
+    function comment_formater($comments, $readable_name){
+        echo "<hr><h3>" . $readable_name . "</h3>";
+        echo "<ul>";
+            foreach($comments as $comment)
+            {
+                echo "<li>" . $comment . "</li>";
+            }
+        echo "</ul>";
+    }
+
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-<hr>
-    <h3>Candy Comments</h3>
-    <ul>
-        <?php foreach($candy_comments as $comment): ?>
-            <li>
-                <?php echo $comment; ?>
-            </li>
-        <?php endforeach; ?>
-    </ul>
-
-    <hr>
-    <h3>Call Comments</h3>
-    <ul>
-        <?php foreach($call_comments as $comment): ?>
-            <li>
-                <?php echo $comment; ?>
-            </li>
-        <?php endforeach; ?>
-    </ul>
-
-    <hr>
-    <h3>Referred Comments</h3>
-    <ul>
-        <?php foreach($referred_comments as $comment): ?>
-            <li>
-                <?php echo $comment; ?>
-            </li>
-        <?php endforeach; ?>
-    </ul>
-
-    <hr>
-    <h3>Signature Comments</h3>
-    <ul>
-        <?php foreach($signature_comments as $comment): ?>
-            <li>
-                <?php echo $comment; ?>
-            </li>
-        <?php endforeach; ?>
-    </ul>
-
-    <hr>
-    <h3>Miscellaneous Comments</h3>
-    <ul>
-        <?php foreach($misc_comments as $comment): ?>
-            <li>
-                <?php echo $comment; ?>
-            </li>
-        <?php endforeach; ?>
-    </ul>
-    <hr>
-</body>
-</html>
